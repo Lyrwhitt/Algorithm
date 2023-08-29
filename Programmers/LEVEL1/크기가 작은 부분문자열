@@ -1,0 +1,24 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(string t, string p) {
+    int answer = 0;
+    int idx = 0;
+    unsigned long long ullP = stoull(p);
+    
+    while(idx <= (t.length() - p.length()))
+    {
+        unsigned long long tt = stoull(t.substr(idx, p.length()));
+        
+        if(tt <= ullP)
+        {
+            answer += 1;
+        }
+        
+        idx += 1;
+    }
+    
+    return answer;
+}
