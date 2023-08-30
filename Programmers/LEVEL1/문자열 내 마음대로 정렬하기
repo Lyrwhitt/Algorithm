@@ -1,0 +1,28 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int indx = 0;
+
+bool IndexSorting(string a, string b)
+{
+    if(a[indx] == b[indx])
+    {
+        return a < b;
+    }
+    else
+    {
+        return a[indx] < b[indx];
+    }
+}
+
+vector<string> solution(vector<string> strings, int n) {
+    
+    indx = n;
+    
+    sort(strings.begin(), strings.end(), IndexSorting);
+    
+    return strings;
+}
