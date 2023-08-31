@@ -1,0 +1,40 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+string solution(vector<string> cards1, vector<string> cards2, vector<string> goal) {
+    string answer = "";
+    
+    // 끝에 더미가 있을경우 대비
+    reverse(cards1.begin(), cards1.end());
+    reverse(cards2.begin(), cards2.end());
+    reverse(goal.begin(), goal.end());
+    
+    while(goal.size() != 0)
+    {
+        if((goal.back() != cards1.back()) && (goal.back() != cards2.back()))
+        {
+            break;
+        }
+        
+        if(goal.back() == cards1.back())
+        {
+            goal.pop_back();
+            cards1.pop_back();
+        }
+        else if(goal.back() == cards2.back())
+        {
+            goal.pop_back();
+            cards2.pop_back();
+        }
+    }
+    
+    if(goal.size() != 0)
+        answer = "No";
+    else
+        answer = "Yes";
+    
+    return answer;
+}
