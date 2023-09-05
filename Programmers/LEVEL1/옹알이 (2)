@@ -1,0 +1,56 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+bool Speak(string s){
+    string prev = "";
+    
+    while(true){
+        
+        if(s.length() == 0)
+            return true;
+        
+        string s1 = s.substr(0, 2);
+        string s2 = s.substr(0, 3);
+        
+        if(prev == s1 || prev == s2)
+            return false;
+        
+        if(s2 == "aya"){
+            s.erase(0, 3);
+            prev = "aya";
+            continue;
+        }
+        else if(s2 == "woo"){
+            s.erase(0, 3);
+            prev = "woo";
+            continue;
+        }
+        
+        if(s1 == "ye"){
+            s.erase(0, 2);
+            prev = "ye";
+            continue;
+        }
+        else if(s1 == "ma"){
+            s.erase(0, 2);
+            prev = "ma";
+            continue;
+        }
+        
+        return false;
+    }
+}
+
+int solution(vector<string> babbling) {
+    int answer = 0;
+    
+    for(int i = 0; i < babbling.size(); i++){
+        if(Speak(babbling[i])){
+            answer += 1;
+        }
+    }
+    
+    return answer;
+}
