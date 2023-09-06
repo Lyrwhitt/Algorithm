@@ -1,0 +1,48 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(string s) {
+    int answer = 0;
+    
+    char currentC = 'X';
+    int countC[2] = {0,};
+    
+    for(int i = 0; i < s.length(); i++)
+    {
+        if(currentC == 'X')
+        {
+            currentC = s[i];
+            countC[0] += 1;
+            
+            continue;
+        }
+        
+        if(s[i] == currentC)
+        {
+            countC[0] += 1;
+        }
+        else
+        {
+            countC[1] += 1;
+            
+            if(countC[0] == countC[1])
+            {
+                currentC = 'X';
+                countC[0] = 0; countC[1] = 0;
+                answer += 1;
+            }
+        }
+    }
+    
+    
+    // 마지막까지 못쪼개질때
+    if(currentC != 'X')
+    {
+        answer += 1;
+    }
+    
+    
+    return answer;
+}
