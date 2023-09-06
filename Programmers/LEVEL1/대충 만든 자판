@@ -1,0 +1,45 @@
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+vector<int> solution(vector<string> keymap, vector<string> targets) {
+    vector<int> answer;
+    map<char, int> alphabetMap;
+    
+    for(int i = 65; i < 91; i++)
+    {
+        alphabetMap[(char)i] = 100;
+    }
+    
+    for(int i = 0; i < keymap.size(); i++)
+    {
+        for(int j = 0; j < keymap[i].length(); j++)
+        {
+            if(alphabetMap[keymap[i][j]] > j+1)
+                alphabetMap[keymap[i][j]] = j+1;
+        }
+    }
+    
+    for(int i = 0; i < targets.size(); i++)
+    {
+        int add = 0;
+        
+        for(int j = 0; j < targets[i].length(); j++)
+        {
+            // 작성할 수 없는 문자열일 경우
+            if(alphabetMap[targets[i][j]] == 100)
+            {
+                add = -1;
+                break;
+            }
+            
+            add += alphabetMap[targets[i][j]];
+        }
+        
+        answer.push_back(add);
+    }
+    
+    return answer;
+}
