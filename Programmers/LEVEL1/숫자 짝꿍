@@ -1,0 +1,33 @@
+#include <string>
+#include <vector>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+string solution(string X, string Y) {
+    string answer = "";
+    
+    map<char, int> numMap;
+    
+    for(int i = 0; i < X.length(); i++){
+        numMap[X[i]] += 1;
+    }
+    
+    for(int i = 0; i < Y.length(); i++){
+        if(numMap[Y[i]] > 0){
+            numMap[Y[i]] -= 1;
+            answer += Y[i];
+        }
+    }
+    
+    sort(answer.begin(), answer.end(), greater<char>());
+    
+    if(answer == "")
+        answer = "-1";
+    
+    if(answer[0] == '0')
+        answer = "0";
+    
+    return answer;
+}
