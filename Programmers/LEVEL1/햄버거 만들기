@@ -1,0 +1,23 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(vector<int> ingredient) {
+    int answer = 0;
+    string burger = "";
+    
+    for(int i = 0; i < ingredient.size(); i++) {
+        burger += to_string(ingredient[i]);
+        
+        if(burger.length() >= 4){
+            if(burger.substr(burger.length() - 4, 4) == "1231"){
+                burger.erase(burger.length() - 4, 4);
+                
+                answer += 1;
+            }
+        }
+    }
+    
+    return answer;
+}
