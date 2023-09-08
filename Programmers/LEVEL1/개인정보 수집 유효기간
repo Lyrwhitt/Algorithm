@@ -1,1 +1,52 @@
+#include <string>
+#include <vector>
+#include <map>
+#include <utility>
 
+using namespace std;
+
+vector<int> solution(string today, vector<string> terms, vector<string> privacies) {
+    vector<int> answer;
+    map<char, int> termsMap;
+    vector<pair<int[3], char>> parsPrivacies;
+    
+    int tYear, tMonth, tDay;
+    
+    tYear = stoi(today.substr(0, 4));
+    tMonth = stoi(today.substr(5, 2));
+    tDay = stoi(today.substr(8, 2));
+    
+    for(string s : terms)
+    {
+        termsMap[s[0]] = stoi(s.substr(2));
+    }
+    
+    for(string s : privacies)
+    {
+        pair<int[3], char> newPair;
+        newPair.first[0] = stoi(s.substr(0, 4));
+        newPair.first[1] = stoi(s.substr(5, 2));
+        newPair.first[2] = stoi(s.substr(8, 2));
+        newPair.second = s[11];
+        
+        parsPrivacies.push_back(newPair);
+    }
+    
+    for(int i = 0; i < parsPrivacies.size(); i++)
+    {
+        parsPrivacies[i].first[1] += termsMap[parsPrivacies[i].second];
+        if(parsPrivacies[i].first[1] > 12)
+        {
+            parsPrivacies[i].first[0] += 1;
+            parsPrivacies[i].first[1] -= 12;
+        }
+        if(((parsPrivacies[i].first[0] * 12 * 28) + (parsPrivacies[i].first[1] * 28) + parsPrivacies[i].first[2]) <= 
+          ((tYear * 12 * 28) + (tMonth * 28) + tDay))
+        {
+            answer.push_back(i + 1);
+            continue;
+        }        
+    }
+    
+    return answer;
+}
