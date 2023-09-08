@@ -1,0 +1,27 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <map>
+
+using namespace std;
+
+string solution(vector<string> survey, vector<int> choices) {
+    string answer = "";
+    map<char, int> survMap;
+    
+    for(int i = 0; i < choices.size(); i++){
+        if(choices[i] < 4){
+            survMap[survey[i][0]] += (4 - choices[i]);
+        }
+        else if(choices[i] > 4){
+            survMap[survey[i][1]] += (choices[i] - 4);
+        }
+    }
+    
+    answer += (survMap['R'] >= survMap['T']) ? "R" : "T";
+    answer += (survMap['C'] >= survMap['F']) ? "C" : "F";
+    answer += (survMap['J'] >= survMap['M']) ? "J" : "M";
+    answer += (survMap['A'] >= survMap['N']) ? "A" : "N";
+    
+    return answer;
+}
