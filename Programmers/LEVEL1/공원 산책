@@ -1,0 +1,113 @@
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+vector<int> solution(vector<string> park, vector<string> routes) {
+    vector<int> answer;
+    
+    map<pair<int, int>, char> routeMap;
+    
+    int currentX = 0, currentY = 0;
+    int limitX = park[0].length();
+    int limitY = park.size();
+    
+    for(int i = 0; i < park.size(); i++)
+    {
+        for(int j = 0; j < park[i].length(); j++)
+        {
+            routeMap[make_pair(i, j)] = park[i][j];
+            
+            if(park[i][j] == 'S')
+            {
+                currentX = j; 
+                currentY = i;
+            }
+        }
+    }
+    
+    for(int i = 0; i < routes.size(); i++)
+    {
+        int moveNum = (int)(routes[i][2]) - '0';
+        bool isMove = true;
+        
+        if(routes[i][0] == 'E')
+        {
+            if((currentX + moveNum) >= limitX)
+            {
+                continue;
+            }
+            for(int j = 0; j < moveNum; j++)
+            {
+                if(routeMap[make_pair(currentY, currentX + 1 + j)] == 'X')
+                {
+                    isMove = false;
+                    
+                    break;
+                }
+            }
+            if(isMove) {currentX += moveNum;}
+        }
+        else if(routes[i][0] == 'W')
+        {
+            
+            if((currentX - moveNum) < 0)
+            {
+                continue;
+            }
+            for(int j = 0; j < moveNum; j++)
+            {
+                if(routeMap[make_pair(currentY, currentX - 1 - j)] == 'X')
+                {
+                    isMove = false;
+                    
+                    break;
+                }
+            }
+            
+            if(isMove) {currentX -= moveNum;}
+        }
+        
+        else if(routes[i][0] == 'N')
+        {
+            if((currentY - moveNum) < 0)
+            {
+                continue;
+            }
+            for(int j = 0; j < moveNum; j++)
+            {
+                if(routeMap[make_pair(currentY - 1 - j, currentX)] == 'X')
+                {
+                    isMove = false;
+                    break;
+                }
+            }
+            
+            if(isMove) {currentY -= moveNum;}
+        }
+        
+        else if(routes[i][0] == 'S')
+        {
+            if((currentY + moveNum) >= limitY)
+            {
+                continue;
+            }
+            for(int j = 0; j < moveNum; j++)
+            {
+                if(routeMap[make_pair(currentY + 1 + j, currentX)] == 'X')
+                {
+                    isMove = false;
+                    break;
+                }
+            }
+            
+            if(isMove) {currentY += moveNum;}
+        }
+    }
+    
+    answer.push_back(currentY);
+    answer.push_back(currentX);
+    
+    return answer;
+}
