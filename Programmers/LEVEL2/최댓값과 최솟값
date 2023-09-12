@@ -1,0 +1,27 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+
+bool compare(string a, string b){
+    return stoi(a) < stoi(b);
+}
+
+string solution(string s) {
+    string answer = "";
+    vector<string> sVec;
+    istringstream iss(s);
+    string str_buf;
+    
+    while(getline(iss, str_buf, ' ')){
+        sVec.push_back(str_buf);
+    }
+    
+    sort(sVec.begin(), sVec.end(), compare);
+    
+    answer = sVec[0] + " " + sVec[sVec.size()-1];
+    
+    return answer;
+}
