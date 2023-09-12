@@ -1,0 +1,31 @@
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <map>
+
+using namespace std;
+
+vector<int> solution(vector<string> id_list, vector<string> report, int k) {
+    vector<int> answer(id_list.size());
+    map<string, vector<string>> reportMap;
+    
+    for(int i = 0; i < report.size(); i++){
+        int split = report[i].find(" ");
+        string reporter = report[i].substr(0, split);
+        string reported = report[i].substr(split+1);
+        
+        if(find(reportMap[reported].begin(), reportMap[reported].end(), reporter) == reportMap[reported].end()){
+            reportMap[reported].push_back(reporter);
+        }
+    }
+    
+    for(int i = 0; i < id_list.size(); i++){      
+        if(reportMap[id_list[i]].size() >= k){
+            for(int j = 0; j < reportMap[id_list[i]].size(); j++){
+                answer[find(id_list.begin(), id_list.end(),  reportMap[id_list[i]][j]) - id_list.begin()] += 1;
+            }
+        }
+    }
+    
+    return answer;
+}
