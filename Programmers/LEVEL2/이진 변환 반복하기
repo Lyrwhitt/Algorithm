@@ -1,0 +1,41 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string GetNewBynary(int num) {
+    if (num == 1)
+        return "1";
+
+    string s = "";
+
+    if ((num / 2) != 1) {
+        s = GetNewBynary(num / 2) + to_string(num % 2);
+    }
+    else {
+        s = "1" + to_string(num % 2);
+    }
+
+    return s;
+}
+
+vector<int> solution(string s) {
+    vector<int> answer = { 0, 0 };
+
+    while (s != "1") {
+        answer[0] += 1;
+
+        int count = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '1')
+                count += 1;
+            else
+                answer[1] += 1;
+        }
+
+        s = GetNewBynary(count);
+    }
+
+    return answer;
+}
