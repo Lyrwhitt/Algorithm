@@ -1,0 +1,43 @@
+#include <string>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+int solution(string s) {
+    int answer = 0;   
+    
+    for(int i = 0; i < s.length(); i++){
+        stack<char> sStack;
+        bool flag = false;
+        
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '[' || s[i] == '{' || s[i] == '(') {
+                sStack.push(s[i]);
+                flag = true;
+            }
+            else {
+                if(s[i] == ']'){
+                    if(sStack.top() == '[')
+                        sStack.pop();
+                }
+                else if(s[i] == '}'){
+                    if(sStack.top() == '{')
+                        sStack.pop();
+                }
+                else if(s[i] == ')'){
+                    if(sStack.top() == '(')
+                        sStack.pop();
+                }
+            }
+        }
+        
+        if(sStack.empty() && flag)
+            answer += 1;
+        
+        s.push_back(s[0]);
+        s.erase(s.begin());
+    }
+    
+    return answer;
+}
