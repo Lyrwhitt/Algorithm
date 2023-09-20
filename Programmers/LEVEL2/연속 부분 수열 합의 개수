@@ -1,0 +1,32 @@
+#include <string>
+#include <vector>
+#include <set>
+#include <deque>
+
+using namespace std;
+
+int solution(vector<int> elements) {
+    deque<int> elementsDeque;
+    set<int> sumSet;
+    
+    for(int i = 0; i < elements.size(); i++){
+        elementsDeque.push_back(elements[i]);
+    }
+    
+    for(int i = 1; i <= elements.size(); i++){
+        for(int j = 0; j < elements.size(); j++){
+            int sum = 0;
+            
+            for(int k = 0; k < i; k++){
+                sum += elementsDeque[k];
+            }
+            
+            elementsDeque.push_back(elementsDeque.front());
+            elementsDeque.pop_front();
+            
+            sumSet.insert(sum);
+        }
+    }
+    
+    return sumSet.size();
+}
