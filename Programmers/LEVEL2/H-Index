@@ -1,0 +1,27 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int solution(vector<int> citations) {
+    int answer = citations.size();
+    
+    while(answer > 0){
+        int count = 0;
+        
+        for(int i = 0; i < citations.size(); i++){
+            if(citations[i] >= answer){
+                count += 1;
+            }
+        }
+        
+        // h편 '이상' 주의!! 이거땜에 헤맴. 문제를 제대로 읽자
+        if(count >= answer){
+            break;
+        }
+        else
+            answer -= 1;
+    }
+    
+    return answer;
+}
