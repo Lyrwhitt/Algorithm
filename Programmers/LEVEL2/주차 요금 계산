@@ -1,0 +1,39 @@
+#include <string>
+#include <vector>
+#include <map>
+#include <cmath>
+
+using namespace std;
+
+vector<int> solution(vector<int> fees, vector<string> records) {
+    vector<int> answer;
+    map<int, int> car;
+    map<int, int> fee;
+    
+    for(int i = 0; i < records.size(); i++){
+        int carNum = stoi(records[i].substr(6, 4));
+        int timeRec = (stoi(records[i].substr(0, 2)) * 60) + stoi(records[i].substr(3, 2));
+        string inOut = records[i].substr(11);
+        
+        if(inOut == "OUT"){
+            fee[carNum] += timeRec - car[carNum];
+            car.erase(carNum);
+        }
+        else if(inOut == "IN"){
+            car[carNum] = timeRec;
+        }
+    }
+    
+    for(auto it : car){
+        fee[it.first] += 1439 - it.second;
+    }
+    
+    for(auto it : fee){
+        if(it.second  <= fees[0])
+            answer.push_back(fees[1]);
+        else
+            answer.push_back(fees[1] + ceil((it.second - fees[0]) / (float)fees[2]) * fees[3]);
+    }
+    
+    return answer;
+}
