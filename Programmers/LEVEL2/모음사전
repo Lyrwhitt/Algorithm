@@ -1,0 +1,31 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int answer = 0;
+bool isFind = false;
+
+void Dfs(string curWord, string target){
+    if(isFind || curWord.length() > 5)
+        return;
+    
+    if(curWord == target){
+        isFind = true;
+        return;
+    }
+
+    answer += 1;
+    
+    Dfs(curWord + "A", target);
+    Dfs(curWord + "E", target);
+    Dfs(curWord + "I", target);
+    Dfs(curWord + "O", target);
+    Dfs(curWord + "U", target);
+}
+
+int solution(string word) {
+    Dfs("", word);
+    
+    return answer;
+}
