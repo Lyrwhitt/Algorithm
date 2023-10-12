@@ -1,0 +1,38 @@
+#include <string>
+#include <vector>
+#include <stack>
+
+using namespace std;
+
+vector<int> solution(vector<int> numbers) {
+    vector<int> answer(numbers.size());
+    stack<int> nStack;
+    
+    for(int i = numbers.size()-1; i >= 0; i--)
+    {
+        while(true)
+        {
+            if(nStack.empty())
+            {
+                answer[i] = -1;
+                nStack.push(numbers[i]);
+                break;
+            }
+            else
+            {
+                if(nStack.top() > numbers[i])
+                {
+                    answer[i] = nStack.top();
+                    nStack.push(numbers[i]);
+                    break;
+                }
+                else
+                {
+                    nStack.pop();
+                }
+            }
+        }
+    }
+    
+    return answer;
+}
