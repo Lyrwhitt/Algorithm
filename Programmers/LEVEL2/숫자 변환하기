@@ -1,0 +1,33 @@
+#include <string>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+
+int solution(int x, int y, int n) {
+    int answer = 0;
+
+    queue<pair<int, int>> nQ;
+    
+    nQ.push(make_pair(y, 0));
+    
+    while(!nQ.empty()){
+        int a = nQ.front().first;
+        int b = nQ.front().second;
+        
+        nQ.pop();
+        
+        if(a < x)
+            continue;
+        
+        if(a == x)
+            return b;
+        
+        if(a%2 == 0) nQ.push(make_pair(a/2, b+1));
+        if(a%3 == 0) nQ.push(make_pair(a/3, b+1));
+        nQ.push(make_pair(a-n, b+1));
+    }
+    
+    return -1;
+}
